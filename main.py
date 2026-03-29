@@ -52,19 +52,21 @@ def find_coins_and_count(image: np.ndarray, min_radius: int, max_radius: int, co
 
     imshow("Coins", cimg)
 
-    counter = int()
+    counter_inside = int()
+    counter_outside = int()
 
     for coin in coins[0, :]:
         center = (int(coin[0]), int(coin[1]))
         result = cv2.pointPolygonTest(contour, center, False)
         if result >= 0:
             cv2.circle(cimg, center, coin[2], (0, 255, 0), 2)
-            counter += 1
+            counter_inside += 1
         else:
             cv2.circle(cimg, center, coin[2], (0, 0, 255), 2)
+            counter_outside += 1
 
     imshow("Found coins", cimg)
-    print(f"Found {counter} - {name_of_looking_coin} coins")
+    print(f"Found {counter_inside} - {name_of_looking_coin} coins inside and {counter_outside} outside")
 
 
 def main():
